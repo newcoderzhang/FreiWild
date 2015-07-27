@@ -3,4 +3,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="connection_point" translatable="false">http://www.frei-wild.net/api/</string>
 </resources>
