@@ -18,8 +18,6 @@ import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.observables.AndroidObservable;
 import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 
@@ -32,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ObserverAdapter mObserverAdapter;
 
     private RequestsApi requestsApi;
+    private ReleaseModelImpl mReleaseModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         requestsApi = ServiceGenerator.createService(RequestsApi.class);
+        mReleaseModel = new ReleaseModelImpl(requestsApi);
 
         mCompositeSubscription.add(AndroidObservable.bindActivity(this, getReleases())
                 .subscribe(handleRelease(), handleError()));
@@ -49,14 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Observable<Release> getReleases() {
-        return requestsApi.getReleases()
-                .flatMap(new Func1<List<Release>, Observable<Release>>() {
-                    @Override
-                    public Observable<Release> call(List<Release> releases) {
-                        return Observable.from(releases);
-                    }
-                })
-                .subscribeOn(Schedulers.io());
+        return mReleaseModel.getData();
     }
 
     public Action1<Release> handleRelease() {
