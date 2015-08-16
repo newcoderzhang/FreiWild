@@ -1,6 +1,5 @@
 package com.accord.android.freiwild.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,7 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.accord.android.freiwild.app.io.Concert;
+import com.accord.android.freiwild.app.io.Data;
 import com.accord.android.freiwild.app.io.Release;
+import com.accord.android.freiwild.app.model.ConcertModelCreator;
 import com.accord.android.freiwild.app.model.Model;
 import com.accord.android.freiwild.app.model.ReleaseModelCreator;
 
@@ -34,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     private ObserverAdapter mObserverAdapter;
 
-    private Model<Release> mModel;
+    private Model<Release> mReleaseModel;
+    private Model<Concert> mConcertModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,26 +54,28 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        mModel = workerFragment.<ReleaseModelCreator, Release>getModel(new ReleaseModelCreator());
+        mReleaseModel = workerFragment.<ReleaseModelCreator, Release>getModel(new ReleaseModelCreator());
+        mConcertModel = workerFragment.<ConcertModelCreator, Concert>getModel(new ConcertModelCreator());
 
         mCompositeSubscription.add(AndroidObservable.bindActivity(this, getReleases())
                 .subscribe(handleRelease(), handleError()));
+        mCompositeSubscription.add(AndroidObservable.bindActivity(this, getConcerts())
+                .subscribe(handleConcert(), handleError()));
 
         mObserverAdapter = new ObserverAdapter();
         mList.setAdapter(mObserverAdapter);
 
-        Intent intent = new Intent(this, MainActivity.class);
     }
 
     public Observable<Release> getReleases() {
-        return mModel.getData();
+        return mReleaseModel.getData();
     }
 
     public Action1<Release> handleRelease() {
         return new Action1<Release>() {
             @Override
             public void call(Release release) {
-                mObserverAdapter.addItem(release);
+//                mObserverAdapter.addItem(release);
             }
         };
     }
@@ -84,6 +89,19 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    public Observable<Concert> getConcerts() {
+        return mConcertModel.getData();
+    }
+
+    public Action1<Concert> handleConcert() {
+        return new Action1<Concert>() {
+            @Override
+            public void call(Concert concert) {
+                mObserverAdapter.addItem(concert);
+            }
+        };
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -93,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     public static class ObserverAdapter extends BaseAdapter {
 
 
-        private List<Release> releases = new ArrayList<>();
+        private List<Concert> dataList = new ArrayList<>();
 
         public ObserverAdapter() {
             super();
@@ -101,12 +119,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return releases.size();
+            return dataList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return releases.get(position);
+            return dataList.get(position);
         }
 
         @Override
@@ -119,12 +137,12 @@ public class MainActivity extends AppCompatActivity {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
             TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-            textView.setText(releases.get(position).title);
+            textView.setText(dataList.get(position).title);
             return convertView;
         }
 
-        public void addItem(Release release) {
-            releases.add(release);
+        public void addItem(Concert data) {
+            dataList.add(data);
             notifyDataSetChanged();
         }
     }
