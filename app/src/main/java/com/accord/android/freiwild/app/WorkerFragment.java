@@ -28,7 +28,7 @@ public class WorkerFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    public <T extends ModelCreator> Model getModel(T creator) {
+    public <T extends ModelCreator<V>, V extends Data> Model<V> getModel(T creator) {
         return creator.createModel(mRequestApi);
     }
 }

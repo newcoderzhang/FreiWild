@@ -3,7 +3,7 @@ package com.accord.android.freiwild.app;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Release {
+public class Release implements Data {
 
     @SerializedName("ID")
     public String id;

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     private ObserverAdapter mObserverAdapter;
 
-    private Model mModel;
+    private Model<Release> mModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        mModel = workerFragment.getModel(new ReleaseModelCreatorImpl());
+        mModel = workerFragment.<ReleaseModelCreator, Release>getModel(new ReleaseModelCreator());
 
         mCompositeSubscription.add(AndroidObservable.bindActivity(this, getReleases())
                 .subscribe(handleRelease(), handleError()));

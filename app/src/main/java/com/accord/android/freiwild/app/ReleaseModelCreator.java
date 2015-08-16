@@ -1,9 +1,9 @@
 package com.accord.android.freiwild.app;
 
 
-public class ReleaseModelCreatorImpl implements ModelCreator {
+public class ReleaseModelCreator implements ModelCreator {
     @Override
     public Model<Release> createModel(RequestsApi requestsApi) {
-        return new ReleaseModelImpl(requestsApi);
+        return new ReleaseModel(requestsApi);
     }
 }

@@ -7,11 +7,11 @@ import rx.Observable;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class ReleaseModelImpl implements Model<Release> {
+public class ReleaseModel implements Model<Release> {
 
     private final RequestsApi mRequestApi;
 
-    public ReleaseModelImpl(RequestsApi requestsApi) {
+    public ReleaseModel(RequestsApi requestsApi) {
         mRequestApi = requestsApi;
     }
 
