@@ -1,5 +1,6 @@
 package com.accord.android.freiwild.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     private ObserverAdapter mObserverAdapter;
 
-    private RequestsApi requestsApi;
-    private ReleaseModelImpl mReleaseModel;
+    private Model mModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +38,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        requestsApi = ServiceGenerator.createService(RequestsApi.class);
-        mReleaseModel = new ReleaseModelImpl(requestsApi);
+        WorkerFragment workerFragment = (WorkerFragment) getSupportFragmentManager()
+                .findFragmentByTag(WorkerFragment.TAG_WORKER);
+        if (workerFragment == null) {
+            workerFragment = WorkerFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .add(workerFragment, WorkerFragment.TAG_WORKER)
+                    .commit();
+        }
+
+        mModel = workerFragment.getModel(new ReleaseModelCreatorImpl());
 
         mCompositeSubscription.add(AndroidObservable.bindActivity(this, getReleases())
                 .subscribe(handleRelease(), handleError()));
 
         mObserverAdapter = new ObserverAdapter();
         mList.setAdapter(mObserverAdapter);
+
+        Intent intent = new Intent(this, MainActivity.class);
     }
 
     public Observable<Release> getReleases() {
-        return mReleaseModel.getData();
+        return mModel.getData();
     }
 
     public Action1<Release> handleRelease() {
