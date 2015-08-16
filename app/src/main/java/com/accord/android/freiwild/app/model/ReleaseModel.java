@@ -1,5 +1,8 @@
-package com.accord.android.freiwild.app;
+package com.accord.android.freiwild.app.model;
 
+
+import com.accord.android.freiwild.app.RequestsApi;
+import com.accord.android.freiwild.app.io.Release;
 
 import java.util.List;
 

@@ -4,6 +4,9 @@ package com.accord.android.freiwild.app;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.accord.android.freiwild.app.io.Data;
+import com.accord.android.freiwild.app.model.Model;
+import com.accord.android.freiwild.app.model.ModelCreator;
 
 
 public class WorkerFragment extends Fragment {

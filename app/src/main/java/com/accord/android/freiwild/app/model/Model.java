@@ -1,5 +1,7 @@
-package com.accord.android.freiwild.app;
+package com.accord.android.freiwild.app.model;
 
+
+import com.accord.android.freiwild.app.io.Data;
 
 import rx.Observable;
 

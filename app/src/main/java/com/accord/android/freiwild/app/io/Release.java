@@ -1,4 +1,4 @@
-package com.accord.android.freiwild.app;
+package com.accord.android.freiwild.app.io;
 
 
 import com.google.gson.annotations.SerializedName;

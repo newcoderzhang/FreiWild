@@ -1,6 +1,8 @@
 package com.accord.android.freiwild.app;
 
 
+import com.accord.android.freiwild.app.io.Release;
+
 import java.util.List;
 
 import retrofit.http.GET;

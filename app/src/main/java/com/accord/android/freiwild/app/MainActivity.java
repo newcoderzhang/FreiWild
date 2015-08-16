@@ -11,6 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.accord.android.freiwild.app.io.Release;
+import com.accord.android.freiwild.app.model.Model;
+import com.accord.android.freiwild.app.model.ReleaseModelCreator;
+
 import java.util.ArrayList;
 import java.util.List;
 
