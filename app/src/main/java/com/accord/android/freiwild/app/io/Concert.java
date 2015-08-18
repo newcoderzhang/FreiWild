@@ -3,6 +3,8 @@ package com.accord.android.freiwild.app.io;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Concert implements Data {
 
     @SerializedName("ID")
@@ -15,7 +17,7 @@ public class Concert implements Data {
     public String title;
 
     @SerializedName("Datum")
-    public String date;
+    public Date date;
 
     @SerializedName("Ort")
     public String city;

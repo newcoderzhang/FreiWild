@@ -3,6 +3,8 @@ package com.accord.android.freiwild.app.io;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Release implements Data {
 
     @SerializedName("ID")
@@ -15,7 +17,7 @@ public class Release implements Data {
     public String htmlText;
 
     @SerializedName("ReleaseDate")
-    public String releaseDate;
+    public Date releaseDate;
 
     @SerializedName("ImageURL")
     public String imageUrl;
