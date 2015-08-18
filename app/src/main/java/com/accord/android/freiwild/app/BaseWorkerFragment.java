@@ -9,12 +9,8 @@ import com.accord.android.freiwild.app.model.Model;
 
 public abstract class BaseWorkerFragment<T extends Data> extends Fragment {
 
-    protected static RequestsApi mRequestApi;
-
     public BaseWorkerFragment() {
-        if (mRequestApi == null) {
-            mRequestApi = ServiceGenerator.createService(RequestsApi.class);
-        }
+
     }
 
     @Override

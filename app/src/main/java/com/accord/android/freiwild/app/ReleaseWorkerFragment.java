@@ -4,6 +4,7 @@ package com.accord.android.freiwild.app;
 import com.accord.android.freiwild.app.io.Release;
 import com.accord.android.freiwild.app.model.Model;
 import com.accord.android.freiwild.app.model.ReleaseModel;
+import com.accord.android.freiwild.app.model.ReleaseModelCreator;
 
 
 public class ReleaseWorkerFragment extends BaseWorkerFragment<Release> {
@@ -18,7 +19,7 @@ public class ReleaseWorkerFragment extends BaseWorkerFragment<Release> {
 
     public Model<Release> getModel() {
         if (mReleaseModel == null) {
-            mReleaseModel = new ReleaseModel(mRequestApi);
+            mReleaseModel = (new ReleaseModelCreator()).createModel();
         }
         return mReleaseModel;
     }

@@ -2,6 +2,7 @@ package com.accord.android.freiwild.app;
 
 import com.accord.android.freiwild.app.io.Concert;
 import com.accord.android.freiwild.app.model.ConcertModel;
+import com.accord.android.freiwild.app.model.ConcertModelCreator;
 import com.accord.android.freiwild.app.model.Model;
 
 
@@ -18,7 +19,7 @@ public class ConcertWorkerFragment extends BaseWorkerFragment<Concert> {
     @Override
     public Model<Concert> getModel() {
         if (mConcertModel == null) {
-            mConcertModel = new ConcertModel(mRequestApi);
+            mConcertModel = (new ConcertModelCreator()).createModel();
         }
         return mConcertModel;
     }
