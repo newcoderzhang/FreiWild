@@ -11,11 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.accord.android.freiwild.app.io.Concert;
-import com.accord.android.freiwild.app.io.Data;
 import com.accord.android.freiwild.app.io.Release;
 import com.accord.android.freiwild.app.model.ConcertModelCreator;
 import com.accord.android.freiwild.app.model.Model;
-import com.accord.android.freiwild.app.model.ReleaseModelCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,17 +43,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        WorkerFragment workerFragment = (WorkerFragment) getSupportFragmentManager()
-                .findFragmentByTag(WorkerFragment.TAG_WORKER);
-        if (workerFragment == null) {
-            workerFragment = WorkerFragment.newInstance();
+        ReleaseWorkerFragment releaseWorkerFragment = (ReleaseWorkerFragment) getSupportFragmentManager()
+                .findFragmentByTag(ReleaseWorkerFragment.TAG_WORKER);
+        if (releaseWorkerFragment == null) {
+            releaseWorkerFragment = ReleaseWorkerFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
-                    .add(workerFragment, WorkerFragment.TAG_WORKER)
+                    .add(releaseWorkerFragment, ReleaseWorkerFragment.TAG_WORKER)
                     .commit();
         }
 
-        mReleaseModel = workerFragment.<ReleaseModelCreator, Release>getModel(new ReleaseModelCreator());
-        mConcertModel = workerFragment.<ConcertModelCreator, Concert>getModel(new ConcertModelCreator());
+        ConcertWorkerFragment concertWorkerFragment = (ConcertWorkerFragment) getSupportFragmentManager()
+                .findFragmentByTag(ConcertWorkerFragment.TAG_WORKER);
+        if (concertWorkerFragment == null) {
+            concertWorkerFragment = ConcertWorkerFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .add(concertWorkerFragment, ConcertWorkerFragment.TAG_WORKER)
+                    .commit();
+        }
+
+        mReleaseModel = releaseWorkerFragment.getModel();
+        mConcertModel = concertWorkerFragment.getModel();
+
 
         mCompositeSubscription.add(AndroidObservable.bindActivity(this, getReleases())
                 .subscribe(handleRelease(), handleError()));
