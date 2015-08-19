@@ -21,12 +21,7 @@ public class ConcertModel implements Model<Concert> {
     @Override
     public Observable<Concert> getData() {
         return mRequestApi.getConcerts()
-                .flatMap(new Func1<List<Concert>, Observable<Concert>>() {
-                    @Override
-                    public Observable<Concert> call(List<Concert> concerts) {
-                        return Observable.from(concerts);
-                    }
-                })
+                .flatMap(Observable::from)
                 .subscribeOn(Schedulers.io());
     }
 }

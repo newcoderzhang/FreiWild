@@ -21,12 +21,7 @@ public class ReleaseModel implements Model<Release> {
     @Override
     public Observable<Release> getData() {
         return mRequestApi.getReleases()
-                .flatMap(new Func1<List<Release>, Observable<Release>>() {
-                    @Override
-                    public Observable<Release> call(List<Release> releases) {
-                        return Observable.from(releases);
-                    }
-                })
+                .flatMap(Observable::from)
                 .subscribeOn(Schedulers.io());
     }
 }

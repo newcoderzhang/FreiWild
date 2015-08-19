@@ -61,40 +61,29 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
+        mObserverAdapter = new ObserverAdapter();
+        mList.setAdapter(mObserverAdapter);
+
         mReleaseModel = releaseWorkerFragment.getModel();
         mConcertModel = concertWorkerFragment.getModel();
 
 
-        mCompositeSubscription.add(AndroidObservable.bindActivity(this, getReleases())
-                .subscribe(handleRelease(), handleError()));
+//        mCompositeSubscription.add(AndroidObservable.bindActivity(this, getReleases())
+//                .subscribe(handleRelease(), handleError()));
         mCompositeSubscription.add(AndroidObservable.bindActivity(this, getConcerts())
                 .subscribe(handleConcert(), handleError()));
-
-        mObserverAdapter = new ObserverAdapter();
-        mList.setAdapter(mObserverAdapter);
-
     }
 
     public Observable<Release> getReleases() {
         return mReleaseModel.getData();
     }
 
-    public Action1<Release> handleRelease() {
-        return new Action1<Release>() {
-            @Override
-            public void call(Release release) {
-//                mObserverAdapter.addItem(release);
-            }
-        };
-    }
+//    public Action1<Release> handleRelease() {
+//        return mObserverAdapter::addItem;
+//    }
 
     public Action1<Throwable> handleError() {
-        return new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                Log.e("MainActivity", throwable.getMessage());
-            }
-        };
+        return throwable -> Log.e("MainActivity", throwable.getMessage());
     }
 
     public Observable<Concert> getConcerts() {
@@ -102,12 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Action1<Concert> handleConcert() {
-        return new Action1<Concert>() {
-            @Override
-            public void call(Concert concert) {
-                mObserverAdapter.addItem(concert);
-            }
-        };
+        return mObserverAdapter::addItem;
     }
 
     @Override
