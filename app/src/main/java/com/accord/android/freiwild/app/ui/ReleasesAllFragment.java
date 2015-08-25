@@ -72,7 +72,6 @@ public class ReleasesAllFragment extends Fragment {
 
         mReleasesAdapter = new ReleasesAdapter(getActivity(), new ArrayList<>());
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
                 .getDimensionPixelSize(R.dimen.recycler_grid_item_space)));
         mRecyclerView.setAdapter(mReleasesAdapter);
