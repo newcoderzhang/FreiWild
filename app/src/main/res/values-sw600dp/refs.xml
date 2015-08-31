@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="item_release_card" type="layout">@layout/item_release_card_vertical</item>
+    <item name="release_span_count" format="integer" type="integer">3</item>
+    <item name="layoutManager" format="string" type="string">android.support.v7.widget.GridLayoutManager</item>
+</resources>

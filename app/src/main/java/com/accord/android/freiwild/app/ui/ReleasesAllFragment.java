@@ -130,7 +130,7 @@ public class ReleasesAllFragment extends Fragment {
 
         @Override
         public ReleaseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = mInflater.inflate(R.layout.item_release_card_vertical, parent, false);
+            View itemView = mInflater.inflate(R.layout.item_release_card, parent, false);
             return new ReleaseHolder(itemView);
         }
 
@@ -141,6 +141,7 @@ public class ReleasesAllFragment extends Fragment {
             holder.dateView.setText(mDateFormat.format(item.releaseDate));
             Picasso.with(mContext)
                     .load("http://www.frei-wild.net/" + item.imageUrl)
+                    .stableKey(item.id)
                     .into(holder.iconView);
         }
 

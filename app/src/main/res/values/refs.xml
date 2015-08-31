@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="item_release_card" format="reference" type="layout">@layout/item_release_card_horizontal</item>
+    <item name="release_span_count" format="integer" type="integer">1</item>
+    <item name="layoutManager" format="string" type="string">android.support.v7.widget.LinearLayoutManager</item>
+</resources>
